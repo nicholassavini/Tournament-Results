@@ -4,7 +4,7 @@
 #
 
 import psycopg2
-
+import bleach
 
 def connect():
     """Connect to the PostgreSQL database.  Returns a database connection."""
@@ -47,6 +47,10 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
+
+    # Clean the input being passed into the query
+    name = bleach.clean(name)
+
     conn = connect()
     curs = conn.cursor()
     curs.execute("INSERT INTO players (name) VALUES (%s)", (name,))
@@ -83,6 +87,10 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
+    # Clean the input being passed into the query
+    winner = bleach.clean(winner)
+    loser = bleach.clean(loser)
+
     conn = connect()
     curs = conn.cursor()
     curs.execute("INSERT INTO matches (winner, loser) VALUES (%s, %s)", (winner, loser))
