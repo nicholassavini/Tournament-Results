@@ -6,11 +6,20 @@
 -- You can write comments in this file by starting them with two dashes, like
 -- these lines here.
 
+-- Checks to see if database already exists
+DROP DATABASE IF EXISTS tournament;
+-- Create tournament database
+CREATE DATABASE tournament;
+-- Connect to tournament database
+\c tournament
+
+-- Create table for players
 CREATE TABLE players(
     id serial primary key,
     name text
 );
 
+-- Create table for matches
 CREATE TABLE matches(
     match serial primary key,
     round integer,
