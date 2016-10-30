@@ -6,6 +6,7 @@
 import psycopg2
 import bleach
 
+
 def connect():
     """Connect to the PostgreSQL database.  Returns a database connection."""
     return psycopg2.connect("dbname=tournament")
@@ -18,6 +19,7 @@ def deleteMatches():
     curs.execute("DELETE FROM matches")
     conn.commit()
     conn.close()
+
 
 def deletePlayers():
     """Remove all the player records from the database."""
@@ -37,6 +39,7 @@ def countPlayers():
     conn.close()
 
     return num_players[0][0]
+
 
 def registerPlayer(name):
     """Adds a player to the tournament database.
@@ -58,12 +61,11 @@ def registerPlayer(name):
     conn.close()
 
 
-
 def playerStandings():
     """Returns a list of the players and their win records, sorted by wins.
 
-    The first entry in the list should be the player in first place, or a player
-    tied for first place if there is currently a tie.
+    The first entry in the list should be the player in first place, or a
+    player tied for first place if there is currently a tie.
 
     Returns:
       A list of tuples, each of which contains (id, name, wins, matches):
@@ -80,6 +82,7 @@ def playerStandings():
 
     return standings
 
+
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
 
@@ -87,13 +90,15 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
+
     # Clean the input being passed into the query
     winner = bleach.clean(winner)
     loser = bleach.clean(loser)
 
     conn = connect()
     curs = conn.cursor()
-    curs.execute("INSERT INTO matches (winner, loser) VALUES (%s, %s)", (winner, loser))
+    curs.execute("INSERT INTO matches (winner, loser) VALUES (%s, %s)",
+                 (winner, loser))
     conn.commit()
     conn.close()
 
@@ -125,6 +130,3 @@ def swissPairings():
                          standings[(p+1)][1]))
 
     return pairings
-
-
-
