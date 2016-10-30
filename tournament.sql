@@ -23,8 +23,6 @@ CREATE TABLE players(
 CREATE TABLE matches(
     match serial primary key,
     round integer,
-    player_1 integer references players(id),
-    player_2 integer references players(id),
     winner integer references players(id)
+    loser integer references players(id)
 );
-
