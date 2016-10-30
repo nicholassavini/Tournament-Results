@@ -85,7 +85,7 @@ def reportMatch(winner, loser):
     """
     conn = connect()
     curs = conn.cursor()
-    curs.execute("INSERT INTO matches (winner, loser) VALUES (%s, %s)", (winner, loser,))
+    curs.execute("INSERT INTO matches (winner, loser) VALUES (%s, %s)", (winner, loser))
     conn.commit()
     conn.close()
 
@@ -105,5 +105,18 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+    conn = connect()
+    curs = conn.cursor()
+    curs.execute("SELECT * FROM standings")
+    standings = curs.fetchall()
+    conn.close()
+
+    pairings = []
+    for p in range(0, len(standings), 2):
+        pairings.append((standings[p][0], standings[p][1], standings[(p+1)][0],
+                         standings[(p+1)][1]))
+
+    return pairings
+
 
 
