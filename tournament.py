@@ -68,7 +68,13 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+    conn = connect()
+    curs = conn.cursor()
+    curs.execute("SELECT * FROM standings")
+    standings = curs.fetchall()
+    conn.close()
 
+    return standings
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
@@ -77,7 +83,6 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
-
 
 def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
