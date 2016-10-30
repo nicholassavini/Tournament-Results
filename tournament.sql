@@ -26,3 +26,19 @@ CREATE TABLE matches(
     winner integer references players(id),
     loser integer references players(id)
 );
+
+CREATE VIEW standings AS
+    SELECT
+    id,
+    name,
+    SUM(CASE
+        WHEN players.id = matches.winner THEN 1
+        ELSE 0
+    END) AS wins,
+    COUNT(matches) AS matches
+    FROM players
+    LEFT OUTER JOIN matches
+    ON players.id = matches.winner
+    OR players.id = matches.loser
+    GROUP BY id
+    ORDER BY wins;
