@@ -47,6 +47,12 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
+    conn = connect()
+    curs = conn.cursor()
+    curs.execute("INSERT INTO players (name) VALUES (%s)", (name,))
+    conn.commit()
+    conn.close()
+
 
 
 def playerStandings():
