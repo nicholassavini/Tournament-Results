@@ -41,4 +41,4 @@ CREATE VIEW standings AS
     ON players.id = matches.winner
     OR players.id = matches.loser
     GROUP BY id
-    ORDER BY wins;
+    ORDER BY wins DESC;
