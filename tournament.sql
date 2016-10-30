@@ -26,6 +26,7 @@ CREATE TABLE matches(
     loser integer references players(id)
 );
 
+-- View to determine the current standings
 CREATE VIEW standings AS
     SELECT
     id,
